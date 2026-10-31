@@ -32,7 +32,7 @@ kind: "package-bundle"
 npm install --ignore-scripts --workspaces=false
 npm run build
 npm pack
-dsh plugin --profile desktop add "D:/Projects/deepseek-harness/plugins/codex-effort-switcher/dsh-codex-effort-switcher-0.2.1.tgz"
+dsh plugin --profile <profile> add "./dsh-codex-effort-switcher-0.2.2.tgz"
 ```
 
 也可以在 DSH 插件管理器中填入 `.tgz` 的绝对路径。装进你实际使用的 profile；桌面端请用桌面端自己的插件管理器，因为 CLI 会拒绝由应用托管的 profile。安装后需要重启应用：没有实时补丁重载的 profile 只在启动时组合新 bundle。本插件不会自行安装到任何 profile。

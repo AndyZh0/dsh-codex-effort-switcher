@@ -32,7 +32,7 @@ Build the package inside this directory; development dependencies and artifacts 
 npm install --ignore-scripts --workspaces=false
 npm run build
 npm pack
-dsh plugin --profile desktop add "D:/Projects/deepseek-harness/plugins/codex-effort-switcher/dsh-codex-effort-switcher-0.2.1.tgz"
+dsh plugin --profile <profile> add "./dsh-codex-effort-switcher-0.2.2.tgz"
 ```
 
 Alternatively install the absolute `.tgz` path from DSH's plugin manager. Install into the profile you use, and use Desktop's own plugin manager for Desktop: the CLI refuses a profile the application manages. Restart the app afterwards, because a profile without live patch reloading composes the new bundle at boot. This plugin does not install itself into any profile.
