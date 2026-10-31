@@ -60,7 +60,7 @@ Uninstalling removes the bundle layer and the card; saved model selections and t
 
 The browser half provides the `codexModelTiers` client service (`SeatTierRegistry`). A client plugin can add an effort tier above the model's own levels by injecting the service and registering a `SeatTier` with `id`, `label`, `description`, `available(model)`, `effort(model)`, `active(sessionId)`, and `apply(sessionId, selection, model, select)`. The card appends registered tiers after the shipped efforts; `apply` receives the standard `select` function, so the Host still sees exactly one `session.selectModel`. The top tier gets the violet `data-ultra` skin. Without a contributor the registry is empty and the card is unchanged; removing a contributor removes its tier without touching selections or the session log.
 
-`dsh-codex-ultra` is the reference consumer: it registers the fifth Ultra tier, maps it to max, and arms the proactive multi-agent Host half. Install both packages for that behavior.
+A tier contributor is an ordinary client plugin: it injects the service, registers its tier, and may ship its own Host half for whatever the tier means beyond the effort. The dependency runs one way — the contributor depends on this package, never the reverse.
 
 <a id="development"></a>
 ## Development
@@ -73,7 +73,7 @@ node tests/browser-smoke.mjs
 
 The first two commands run independently; the switcher test also covers a contributed tier. The browser smoke packs the plugin, installs it into a throwaway `DSH_HOME` profile through `apps/cli/lib/bin.js`, points a fixture provider at a local model endpoint, boots `dsh web` from the DSH checkout, and drives Microsoft Edge through the real card — asserting the faces, the slider, viewport fitting, the routed model, and the routed reasoning-effort wire value. It needs `pnpm run build` in the DSH checkout and writes ignored evidence under `.runtime/`. Published packages exclude tests and development dependencies.
 
-The browser half requires no DSH module beyond the platform seed words it renders through (`react`, `react-dom`, `@deepseek-ai/dsh-client-ui-primitives`). It provides the `codexModelTiers` registry that `dsh-codex-ultra` injects. The Host entry is an empty marker so the bundle row exists for the client scan.
+The browser half requires no DSH module beyond the platform seed words it renders through (`react`, `react-dom`, `@deepseek-ai/dsh-client-ui-primitives`). It provides the `codexModelTiers` registry that tier contributors inject. The Host entry is an empty marker so the bundle row exists for the client scan.
 
 <a id="model-experience"></a>
 ## Model Experience

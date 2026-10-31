@@ -58,7 +58,7 @@ composer 的模型位是单占用槽位。本插件以 `priority: -1` 注册第�
 
 浏览器侧提供 `codexModelTiers` 客户端服务（`SeatTierRegistry`）。客户端插件注入该服务并注册 `SeatTier`（`id`、`label`、`description`、`available(model)`、`effort(model)`、`active(sessionId)`、`apply(sessionId, selection, model, select)`），即可在模型自身档位之上追加档位。卡片把注册档位排在出厂档位之后；`apply` 收到标准 `select`，Host 仍只收到一次 `session.selectModel`。最高档使用紫色 `data-ultra` skin。没有贡献者时注册表为空，卡片不变；移除贡献者只会移除其档位，不影响选择与会话日志。
 
-`dsh-codex-ultra` 是参考消费者：注册第五档 Ultra、映射 max，并激活主动多智能体 Host 半。需要该行为时两个包一起安装。
+档位贡献者就是一个普通的客户端插件：注入该服务、注册自己的档位，并可自带 Host 半来承载该档位在强度之外的语义。依赖是单向的 —— 贡献者依赖本包，反之不成立。
 
 <a id="development"></a>
 ## 开发
@@ -71,7 +71,7 @@ node tests/browser-smoke.mjs
 
 前两条命令相互独立；切换器测试也覆盖贡献档位。浏览器冒烟测试会打包插件，通过 `apps/cli/lib/bin.js` 安装到一次性的 `DSH_HOME` profile，把夹具提供商指向本地模型端点，从 DSH checkout 启动 `dsh web`，并用 Microsoft Edge 真实操作卡片——断言卡片各面、滑杆、视口适配、以及实际发出的模型与推理强度。它需要 DSH checkout 先执行 `pnpm run build`，证据写入被忽略的 `.runtime/`。发布包不含测试与开发依赖。
 
-浏览器侧除平台 seed 模块（`react`、`react-dom`、`@deepseek-ai/dsh-client-ui-primitives`）外不依赖其他 DSH 模块。它提供 `dsh-codex-ultra` 注入的 `codexModelTiers` 注册表。Host 入口是空标记，只为让客户端扫描看到该 bundle 行。
+浏览器侧除平台 seed 模块（`react`、`react-dom`、`@deepseek-ai/dsh-client-ui-primitives`）外不依赖其他 DSH 模块。它提供档位贡献者注入的 `codexModelTiers` 注册表。Host 入口是空标记，只为让客户端扫描看到该 bundle 行。
 
 <a id="model-experience"></a>
 ## 模型体验
